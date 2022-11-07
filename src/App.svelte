@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { playSound } from "./sound";
+  import { initiateSounds, playSound } from "./sound";
 
   let round = 0;
   let seconds = 0;
@@ -38,6 +38,11 @@
     counting = true;
     if (round === 100) round = 0;
     animationInterval(1000, () => seconds++);
+    initiateSounds()
+  }
+
+  function onKeyPress(e: KeyboardEvent) {
+    if (e.key === " ") start();
   }
 
   $: {
@@ -51,6 +56,8 @@
     }
   }
 </script>
+
+<svelte:window on:keypress={onKeyPress} />
 
 <h1>
   {#if round === 100}
@@ -97,4 +104,3 @@
 </section>
 
 <div style:height="{(seconds * 100) / 60}%" class="seconds" />
-
