@@ -7,22 +7,24 @@
   let weight = 75;
   let gender: "male" | "female" = "male";
 
-  $: bac =
+  // https://avogtil.no/promillekalkulator/
+  $: bal =
     (round * (0.4 * 4.7 * 0.8)) / (weight * (gender === "male" ? 0.68 : 0.55)) -
     0.15 * Math.floor(round / 60);
 
-  function animationInterval(ms: number, callback: any) {
+  function countdown() {
+    const ms = 1000;
     const start = document.timeline
       ? document.timeline.currentTime
       : performance.now();
 
     function frame(time: number) {
       if (!counting) return;
-      callback(time);
-      scheduleFrame(time);
+      seconds++;
+      schedule(time);
     }
 
-    function scheduleFrame(time: number) {
+    function schedule(time: number) {
       const elapsed = time - start;
       const roundedElapsed = Math.round(elapsed / ms) * ms;
       const targetNext = start + roundedElapsed + ms;
@@ -30,15 +32,15 @@
       setTimeout(() => requestAnimationFrame(frame), delay);
     }
 
-    scheduleFrame(start);
+    schedule(start);
   }
 
   function start() {
     if (counting) return;
     counting = true;
     if (round === 100) round = 0;
-    animationInterval(1000, () => seconds++);
     initiateSounds()
+    countdown();
   }
 
   function onKeyPress(e: KeyboardEvent) {
@@ -94,7 +96,7 @@
   </p>
   <p>
     <b>Estimert promille :</b>
-    {bac.toFixed(2)}
+    {bal.toFixed(2)}
   </p>
   {#if !counting}
     <button on:click={start}>
