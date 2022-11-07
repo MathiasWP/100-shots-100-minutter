@@ -29,7 +29,7 @@ h1 {
   z-index: 1;
   background-color: #242424;;
   border-radius: 5px;
-  padding: 1rem 0;
+  padding: 1rem 0.2rem;
 }
 
 
@@ -37,7 +37,15 @@ h1 {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+}
+
+select {
+  font-size: 1.1rem;
+  margin-left: 0.2rem;
 }
 
 button {
